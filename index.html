@@ -1,8 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirecting...</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>正在跳轉...</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17282149243"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17282149243');
+
+    // 🚀 自定義進入事件（進站就會觸發）
+    gtag('event', 'conversion', {
+      'send_to': 'AW-17282149243/enter_page'
+    });
+  </script>
+
+  <style>
+    body {display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "PingFang SC", "Microsoft Yahei", sans-serif}
+    .box {text-align:center}
+    .spinner {width:48px;height:48px;border:4px solid #ddd;border-top-color:#555;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
+    @keyframes spin {to {transform: rotate(360deg)}}
+    a{word-break:break-all}
+  </style>
+
   <script>
     const links = [
       "https://wa.me/85268837463",
@@ -49,14 +73,19 @@
       "https://wa.me/85257611834",
       "https://wa.me/85266162835"
     ];
-    const randomLink = links[Math.floor(Math.random() * links.length)];
-    setTimeout(() => {
-      window.location.href = randomLink;
-    }, 2000); // 2秒後跳轉
+    const target = links[Math.floor(Math.random() * links.length)];
+    window.addEventListener("load", () => {
+      setTimeout(() => { window.location.href = target; }, 2000);
+      // 備用：若 6 秒仍未跳轉，立即前往
+      setTimeout(() => { if (location.href.indexOf("wa.me") === -1) location.href = target; }, 6000);
+    });
   </script>
 </head>
 <body>
-  <h2>正在添加whatapp，請稍候...</h2>
-  <p>如果沒有自動跳轉，<a href="https://wa.me/85268837463">點擊這裡</a></p>
+  <div class="box">
+    <div class="spinner"></div>
+    <h2>正在跳轉whatsAPP，請稍候…</h2>
+    <p>若未自動跳轉，<a href="https://wa.me/85268837463">點此前往</a></p>
+  </div>
 </body>
 </html>
