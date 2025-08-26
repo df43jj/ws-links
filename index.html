@@ -1,91 +1,95 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-HK">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>正在跳轉...</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>正在啟動…</title>
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) 只做基本載入，無任何轉化事件 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17282149243"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'AW-17282149243');
-
-    // 🚀 自定義進入事件（進站就會觸發）
-    gtag('event', 'conversion', {
-      'send_to': 'AW-17282149243/enter_page'
-    });
   </script>
 
   <style>
-    body {display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "PingFang SC", "Microsoft Yahei", sans-serif}
-    .box {text-align:center}
-    .spinner {width:48px;height:48px;border:4px solid #ddd;border-top-color:#555;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
-    @keyframes spin {to {transform: rotate(360deg)}}
-    a{word-break:break-all}
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body{
+      margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial; background:#f7f7f9;
+    }
+    .wrap{ width:100%; max-width:760px; padding:28px; text-align:center; }
+    h1{ margin:0 0 8px; font-size:22px; color:#222; }
+    p{ margin:6px 0; color:#555; }
+    .spinner{
+      width:48px; height:48px; border-radius:50%;
+      border:4px solid #dcdfe6; border-top-color:#3b82f6;
+      margin:18px auto; animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .muted{ font-size:13px; color:#777; }
+    .fallback a{ color:#2563eb; text-decoration:none; }
+    .fallback a:hover{ text-decoration:underline; }
   </style>
-
-  <script>
-    const links = [
-      "https://wa.me/85268837463",
-      "https://wa.me/85257654367",
-      "https://wa.me/85268835305",
-      "https://wa.me/85292962352",
-      "https://wa.me/85267263590",
-      "https://wa.me/85253812254",
-      "https://wa.me/85292938264",
-      "https://wa.me/85265211659",
-      "https://wa.me/85266104290",
-      "https://wa.me/85253827104",
-      "https://wa.me/85295648609",
-      "https://wa.me/85268129821",
-      "https://wa.me/85246529934",
-      "https://wa.me/85253883166",
-      "https://wa.me/85295636879",
-      "https://wa.me/85266129650",
-      "https://wa.me/85295688137",
-      "https://wa.me/85267296943",
-      "https://wa.me/85292982270",
-      "https://wa.me/85267228325",
-      "https://wa.me/85253813014",
-      "https://wa.me/85265641858",
-      "https://wa.me/85257603846",
-      "https://wa.me/85268848147",
-      "https://wa.me/85266321130",
-      "https://wa.me/85298634537",
-      "https://wa.me/85266190378",
-      "https://wa.me/85263616070",
-      "https://wa.me/85266171969",
-      "https://wa.me/85266165303",
-      "https://wa.me/85268141253",
-      "https://wa.me/85266131044",
-      "https://wa.me/85253872004",
-      "https://wa.me/85246022892",
-      "https://wa.me/85268127019",
-      "https://wa.me/85265201453",
-      "https://wa.me/85292964095",
-      "https://wa.me/85263615064",
-      "https://wa.me/85265565711",
-      "https://wa.me/85295650350",
-      "https://wa.me/85246534317",
-      "https://wa.me/85257611834",
-      "https://wa.me/85266162835"
-    ];
-    const target = links[Math.floor(Math.random() * links.length)];
-    window.addEventListener("load", () => {
-      setTimeout(() => { window.location.href = target; }, 2000);
-      // 備用：若 6 秒仍未跳轉，立即前往
-      setTimeout(() => { if (location.href.indexOf("wa.me") === -1) location.href = target; }, 6000);
-    });
-  </script>
 </head>
 <body>
-  <div class="box">
-    <div class="spinner"></div>
-    <h2>正在跳轉whatsAPP，請稍候…</h2>
-    <p>若未自動跳轉，<a href="https://wa.me/85268837463">點此前往</a></p>
+  <div class="wrap">
+    <h1>網站正在啟動</h1>
+    <div class="spinner" aria-hidden="true"></div>
+    <p>請稍候，我們將自動為您開啟 WhatsApp。</p>
+    <p id="status" class="muted"></p>
+
+    <!-- 後備鏈接（如果瀏覽器阻擋跳轉或 JS 關閉） -->
+    <noscript>
+      <p class="fallback">如未自動跳轉，請<a href="https://wa.me/85268837463" rel="noopener" target="_blank">點此手動開啟</a>。</p>
+    </noscript>
+    <p class="fallback muted">若 10 秒內未跳轉，請刷新頁面或稍後再試。</p>
   </div>
+
+  <script>
+    // 你的 WhatsApp 連結清單（可增刪）
+    const links = [
+      "https://wa.me/85268837463","https://wa.me/85257654367","https://wa.me/85268835305",
+      "https://wa.me/85292962352","https://wa.me/85267263590","https://wa.me/85253812254",
+      "https://wa.me/85292938264","https://wa.me/85265211659","https://wa.me/85266104290",
+      "https://wa.me/85253827104","https://wa.me/85295648609","https://wa.me/85268129821",
+      "https://wa.me/85246529934","https://wa.me/85253883166","https://wa.me/85295636879",
+      "https://wa.me/85266129650","https://wa.me/85295688137","https://wa.me/85267296943",
+      "https://wa.me/85292982270","https://wa.me/85267228325","https://wa.me/85253813014",
+      "https://wa.me/85265641858","https://wa.me/85257603846","https://wa.me/85268848147",
+      "https://wa.me/85266321130","https://wa.me/85298634537","https://wa.me/85266190378",
+      "https://wa.me/85263616070","https://wa.me/85266171969","https://wa.me/85266165303",
+      "https://wa.me/85268141253","https://wa.me/85266131044","https://wa.me/85253872004",
+      "https://wa.me/85246022892","https://wa.me/85268127019","https://wa.me/85265201453",
+      "https://wa.me/85292964095","https://wa.me/85263615064","https://wa.me/85265565711",
+      "https://wa.me/85295650350","https://wa.me/85246534317","https://wa.me/85257611834",
+      "https://wa.me/85266162835"
+    ];
+
+    // 去重 + 隨機挑選
+    const unique = Array.from(new Set(links));
+    const pick = unique[Math.floor(Math.random() * unique.length)];
+
+    // 延遲跳轉秒數（為了讓 Google 能檢測到 gtag，建議 ≥ 5 秒）
+    let sec = 6;
+    const status = document.getElementById('status');
+    status.textContent = `將於 ${sec} 秒後自動跳轉…`;
+
+    const timer = setInterval(() => {
+      sec--;
+      if (sec <= 0) {
+        clearInterval(timer);
+        window.location.href = pick;
+      } else {
+        status.textContent = `將於 ${sec} 秒後自動跳轉…`;
+      }
+    }, 1000);
+
+    // 安全保險：7 秒還沒走就強制跳轉
+    setTimeout(() => { if (location.href.indexOf('wa.me') === -1) location.href = pick; }, 10000);
+  </script>
 </body>
 </html>
