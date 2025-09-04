@@ -4,15 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>正在跳轉…</title>
-
-  <!-- Google tag (gtag.js)：基礎代碼，無轉化事件 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17526079327"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'AW-17526079327');
-  </script>
 </head>
 <body>
   <noscript>
@@ -28,7 +19,7 @@
       "https://wa.me/85292938264","https://wa.me/85265211659","https://wa.me/85266104290",
       "https://wa.me/85253827104","https://wa.me/85295648609","https://wa.me/85268129821",
       "https://wa.me/85246529934","https://wa.me/85253883166","https://wa.me/85295636879",
-      "https://wa.me/85266129650","https://wa.me/85295688137","https://wa.me/85267296943",
+      "https://wa.me/85266129650","https://wa.me/85246513254","https://wa.me/85267296943",
       "https://wa.me/85292982270","https://wa.me/85267228325","https://wa.me/85253813014",
       "https://wa.me/85265641858","https://wa.me/85257603846","https://wa.me/85268848147",
       "https://wa.me/85266321130","https://wa.me/85298634537","https://wa.me/85266190378",
@@ -44,7 +35,7 @@
     const unique = Array.from(new Set(links));
     const pick = unique[Math.floor(Math.random() * unique.length)];
 
-    // 立即跳轉（用 replace 不留歷史記錄）
+    // 3 秒後跳轉
     setTimeout(() => { location.replace(pick); }, 3000);
   </script>
 </body>
