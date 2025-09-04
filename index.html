@@ -4,39 +4,59 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>正在跳轉…</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 20%;
+    }
+    h2 {
+      color: #333;
+    }
+    .countdown {
+      font-size: 20px;
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
+  <h2>正在為您跳轉到 WhatsApp...</h2>
+  <p>請稍候，還剩 <span class="countdown">1.2</span> 秒</p>
+
   <noscript>
     如未自動跳轉，請點此：
-    <a href="https://wa.me/85268837463" rel="noopener">https://wa.me/85268837463</a>
+    <a href="https://wa.me/85268837643" rel="noopener">https://wa.me/85268837643</a>
   </noscript>
 
   <script>
-    // WhatsApp 連結清單
+    // WhatsApp 連結清單（已更新）
     const links = [
-      "https://wa.me/85268837463","https://wa.me/85257654367","https://wa.me/85268835305",
-      "https://wa.me/85292962352","https://wa.me/85267263590","https://wa.me/85253812254",
-      "https://wa.me/85292938264","https://wa.me/85265211659","https://wa.me/85266104290",
-      "https://wa.me/85253827104","https://wa.me/85295648609","https://wa.me/85268129821",
-      "https://wa.me/85246529934","https://wa.me/85253883166","https://wa.me/85295636879",
-      "https://wa.me/85266129650","https://wa.me/85246513254","https://wa.me/85267296943",
-      "https://wa.me/85292982270","https://wa.me/85267228325","https://wa.me/85253813014",
-      "https://wa.me/85265641858","https://wa.me/85257603846","https://wa.me/85268848147",
-      "https://wa.me/85266321130","https://wa.me/85298634537","https://wa.me/85266190378",
-      "https://wa.me/85263616070","https://wa.me/85266171969","https://wa.me/85266165303",
-      "https://wa.me/85268141253","https://wa.me/85266131044","https://wa.me/85253872004",
-      "https://wa.me/85246022892","https://wa.me/85268127019","https://wa.me/85265201453",
-      "https://wa.me/85292964095","https://wa.me/85263615064","https://wa.me/85265565711",
-      "https://wa.me/85295650350","https://wa.me/85246534317","https://wa.me/85257611834",
-      "https://wa.me/85266162835"
+      "https://wa.me/85268837643",
+      "https://wa.me/85295648609",
+      "https://wa.me/85266104290",
+      "https://wa.me/85265211659",
+      "https://wa.me/85253812254",
+      "https://wa.me/85267263590"
     ];
 
     // 去重 + 隨機挑選
     const unique = Array.from(new Set(links));
     const pick = unique[Math.floor(Math.random() * unique.length)];
 
-    // 1.5 秒後跳轉
-    setTimeout(() => { location.replace(pick); }, 3000);
+    // 倒數計時顯示
+    let timeLeft = 1.2; 
+    const countdownEl = document.querySelector(".countdown");
+    const timer = setInterval(() => {
+      timeLeft -= 0.1;
+      countdownEl.textContent = timeLeft.toFixed(1);
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+      }
+    }, 100);
+
+    // 1.2 秒後跳轉
+    setTimeout(() => { location.replace(pick); }, 1200);
   </script>
 </body>
 </html>
