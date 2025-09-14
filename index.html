@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>在香港認識同頻朋友｜Adults 18+</title>
-  <meta name="description" content="成年人（18+）的正常社交/認真交友入口。尊重私隱，不涉補償式約會或性服務。">
+  <title>在香港認識同頻朋友｜36+｜Adults 18+</title>
+  <meta name="description" content="成年人（36+）的正常社交/認真交友入口。尊重私隱，不涉補償式約會或性服務。">
   <style>
     :root{--bg:#0b0b0c;--card:#141518;--text:#e9eaed;--muted:#a8b0bb;--accent:#20c997;}
     *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#0d0f13,#151922);color:var(--text);
-         font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang HK","Microsoft JhengHei",sans-serif}
+    body{
+      margin:0;background:linear-gradient(180deg,#0d0f13,#151922);color:var(--text);
+      font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang HK","Microsoft JhengHei",sans-serif
+    }
     .wrap{max-width:720px;margin:0 auto;padding:24px}
     .banner{background:#111;border:1px solid #2a2f3a;border-radius:12px;padding:12px 16px;margin:12px 0;display:flex;gap:12px;flex-wrap:wrap}
     .badge{background:#000;padding:6px 10px;border-radius:999px;font-weight:700}
     .card{background:rgba(20,21,24,.82);backdrop-filter: blur(6px);border:1px solid #2a2f3a;border-radius:16px;padding:20px;margin-top:16px}
-    h1{font-size:22px;margin:0 0 8px} p{margin:8px 0;color:var(--muted)}
-    .cta{display:inline-block;margin-top:12px;padding:14px 20px;border-radius:12px;background:var(--accent);color:#08251f;
-         font-weight:700;text-decoration:none;cursor:pointer}
+    h1{font-size:22px;margin:0 0 8px}
+    p{margin:8px 0;color:var(--muted)}
+    .cta{
+      display:inline-block;margin-top:12px;padding:14px 20px;border-radius:12px;background:var(--accent);color:#08251f;
+      font-weight:700;text-decoration:none;cursor:pointer
+    }
     .cta:active{transform:translateY(1px)}
     .btn{padding:10px 12px;border:1px solid #2a2f3a;border-radius:10px;background:#1b1d22;color:#e9eaed;cursor:pointer;text-decoration:none;display:inline-block}
     footer{margin:24px 0 8px;color:var(--muted);font-size:14px}
@@ -32,12 +37,12 @@
     </div>
 
     <div class="card">
-      <h1>在香港認識同頻朋友（Adults 18+）</h1>
-      <p>這是一個給成年人（36+以上）的正常社交/認真交友入口。我們尊重私隱、遵守平台與法律規範，<strong>不提供或促進任何補償式約會、陪同或性服務</strong>。</p>
+      <h1>在香港認識同頻朋友（<b>36+</b>）</h1>
+      <p>這是一個給成年人（<b>36+以上</b>）的正常社交/認真交友入口。我們尊重私隱、遵守平台與法律規範，<strong>不提供或促進任何補償式約會、陪同或性服務</strong>。</p>
 
-      <!-- 主 CTA -->
-      <a class="cta" id="waChat">WhatsApp 點擊即時聊天</a>
-      <p class="hint">點擊按鈕後將打開 WhatsApp 對話窗口（含預填訊息）。</p>
+      <!-- 主 CTA（改為「點擊添加 WhatsApp 即時聊天」） -->
+      <a class="cta" id="waChat">點擊添加 WhatsApp 即時聊天（36+）</a>
+      <p class="hint">點擊按鈕後將打開 WhatsApp 對話窗口（含預填訊息）。若未自動添加，請在 WhatsApp 內手動添加聯絡人。</p>
 
       <!-- 備選操作 -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
@@ -61,7 +66,7 @@
     const APPS_SCRIPT_URL = ""; // 例如 "https://script.google.com/macros/s/xxxx/exec"
 
     // 預填消息
-    const PREFILL = "你好，很高興認識你";
+    const PREFILL = "你好，很高興認識你（36+）";
 
     // 工具
     const qs = new URLSearchParams(location.search);
@@ -102,19 +107,26 @@
       return pickLocalNumber();
     }
 
-    function waUrl(n){ return `https://wa.me/${n}?text=${encodeURIComponent(PREFILL)}`; }
-    function updateAssignInfo(n){ const el=document.getElementById("assignInfo"); el.textContent = n?`已為你分配號碼：+${n}`:""; }
+    function waUrl(n){
+      return `https://wa.me/${n}?text=${encodeURIComponent(PREFILL)}`;
+    }
+
+    function updateAssignInfo(n){
+      const el = document.getElementById("assignInfo");
+      el.textContent = n ? `已為你分配號碼：+${n}` : "";
+    }
+
     function makeVCF(n){
-      const vcf=`BEGIN:VCARD
+      const vcf = `BEGIN:VCARD
 VERSION:3.0
 N:HK;Contact;;;
 FN:HK Contact
 TEL;TYPE=CELL:+${n}
 EMAIL;TYPE=INTERNET:q1012140521@gmail.com
-NOTE:Adults 18+ only. No compensated dating or sexual services.
+NOTE:Adults 18+ only. 36+ preferred. No compensated dating or sexual services.
 END:VCARD`;
-      const blob=new Blob([vcf],{type:"text/vcard"});
-      document.getElementById("vcfBtn").href=URL.createObjectURL(blob);
+      const blob = new Blob([vcf], {type:"text/vcard"});
+      document.getElementById("vcfBtn").href = URL.createObjectURL(blob);
     }
 
     document.getElementById("waChat").addEventListener("click", async ()=>{
@@ -140,7 +152,8 @@ END:VCARD`;
     if (wantAuto && !fromGoogleAd){
       const bar=document.createElement("div");
       bar.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;background:#111;border:1px solid #2a2f3a;color:#fff;padding:12px 14px;border-radius:12px;z-index:9999;font:14px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial";
-      bar.innerHTML=`<div style="margin-bottom:8px;">將在 <b id="c">3</b> 秒後自動打開 WhatsApp（可取消）</div>
+      bar.innerHTML=`
+        <div style="margin-bottom:8px;">將在 <b id="c">3</b> 秒後自動打開 WhatsApp（可取消）</div>
         <div style="display:flex;gap:8px;">
           <button id="openNow" style="padding:8px 12px;border:0;border-radius:10px;background:#20c997;color:#08251f;font-weight:700;cursor:pointer">立即打開</button>
           <button id="cancel" style="padding:8px 12px;border:1px solid #444;border-radius:10px;background:#222;color:#ddd;cursor:pointer">取消</button>
@@ -148,7 +161,12 @@ END:VCARD`;
       document.body.appendChild(bar);
       let t=3; const timerEl=bar.querySelector("#c");
       const iv=setInterval(()=>{t--;timerEl.textContent=t;if(t<=0){clearInterval(iv);openNow();}},1000);
-      async function openNow(){ const n=await ensureAssignedNumber(); updateAssignInfo(n); makeVCF(n); document.body.removeChild(bar); location.href=waUrl(n); }
+      async function openNow(){
+        const n=await ensureAssignedNumber();
+        updateAssignInfo(n); makeVCF(n);
+        document.body.removeChild(bar);
+        location.href=waUrl(n);
+      }
       bar.querySelector("#openNow").onclick=openNow;
       bar.querySelector("#cancel").onclick=()=>{ clearInterval(iv); document.body.removeChild(bar); };
     }
