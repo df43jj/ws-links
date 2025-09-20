@@ -8,6 +8,20 @@
   <meta http-equiv="Expires" content="0" />
   <title>正在為你連接 WhatsApp…</title>
 
+  <!-- Meta Pixel Base Code -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1277972820318914');   /* ← 你的 Pixel ID */
+  fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1277972820318914&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel -->
+
   <!-- X (Twitter) Website Tag - Base -->
   <script>
   !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):
@@ -33,7 +47,6 @@
   </div>
 
   <script>
-    /* 可用的 WhatsApp 基礎連結（不含文字） */
     const LINKS = [
       "https://wa.me/85268837643",
       "https://wa.me/85295648609",
@@ -42,29 +55,25 @@
       "https://wa.me/85253812254",
       "https://wa.me/85267263590"
     ];
-
     const sp = new URLSearchParams(location.search);
-
-    /* 允許 ?force=索引 來固定撥打哪一個號碼（0 開始） */
     let idx = parseInt(sp.get('force'), 10);
     if (!Number.isInteger(idx) || idx < 0 || idx >= LINKS.length) {
       idx = Math.floor(Math.random() * LINKS.length);
     }
-
-    /* 第一句文字：可用 ?text= 來自訂，否則用預設 */
     const presetText = sp.get('text') || '你好，很高興認識你';
-    const encodedText = encodeURIComponent(presetText);
+    const target = `${LINKS[idx]}?text=${encodeURIComponent(presetText)}`;
 
-    /* 最終跳轉目標（帶 ?text=） */
-    const target = `${LINKS[idx]}?text=${encodedText}`;
-
-    /* 備用連結（阻擋自動跳轉時可手點） */
     const fallback = document.getElementById('fallback');
     fallback.href = target;
 
-    /* 先打轉化事件 → 延遲 200ms 再跳轉，避免丟數據 */
-    try { twq('event','tw-q1c3c-qiev1', { value: 1, currency: 'HKD' }); } catch(e) {}
-    setTimeout(function(){ window.location.replace(target); }, 200);
+    // 统一跳转：先发事件（FB + X），再延迟跳转，避免丢数
+    function go() {
+      try { fbq('trackCustom','WhatsApp_Click', { destination: target }); } catch(e){}
+      try { twq('event','tw-q1c3c-qiev1', { value: 1, currency: 'HKD' }); } catch(e){}
+      setTimeout(function(){ window.location.replace(target); }, 300); // 可再加到 400–500ms
+    }
+    go();
+    fallback.addEventListener('click', function(e){ e.preventDefault(); go(); });
   </script>
 
   <noscript>
