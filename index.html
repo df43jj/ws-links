@@ -15,11 +15,13 @@
   n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
   t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
   document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init','1277972820318914');   /* ← 你的 Pixel ID */
+  fbq('init','1277972820318914');   /* ← 你的 Meta Pixel ID */
   fbq('track','PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1277972820318914&ev=PageView&noscript=1"/></noscript>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=1277972820318914&ev=PageView&noscript=1"/>
+  </noscript>
   <!-- End Meta Pixel -->
 
   <!-- X (Twitter) Website Tag - Base -->
@@ -28,7 +30,7 @@
   s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),
   u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
   a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-  twq('config','q1c3c'); /* Pixel ID */
+  twq('config','q1c3c'); /* X Pixel ID */
   </script>
 
   <style>
@@ -42,11 +44,12 @@
     <div>
       <h1>正在為你連接 WhatsApp…</h1>
       <p>如未自動跳轉，請點此備用連結：</p>
-      <p><a id="fallback" href="#" rel="noopener" target="_blank">開啟 WhatsApp</a></p>
+      <p><a id="fallback" href="#" rel="noopener noreferrer nofollow" target="_blank">開啟 WhatsApp</a></p>
     </div>
   </div>
 
   <script>
+    /* 可用的 WhatsApp 連結清單（不含文字） */
     const LINKS = [
       "https://wa.me/85268837643",
       "https://wa.me/85295648609",
@@ -55,30 +58,45 @@
       "https://wa.me/85253812254",
       "https://wa.me/85267263590"
     ];
+
     const sp = new URLSearchParams(location.search);
+
+    /* 允許 ?force=索引 來固定撥號（0 開始） */
     let idx = parseInt(sp.get('force'), 10);
     if (!Number.isInteger(idx) || idx < 0 || idx >= LINKS.length) {
       idx = Math.floor(Math.random() * LINKS.length);
     }
+
+    /* 允許 ?text= 自訂第一句，預設：你好，很高興認識你 */
     const presetText = sp.get('text') || '你好，很高興認識你';
     const target = `${LINKS[idx]}?text=${encodeURIComponent(presetText)}`;
 
+    /* 備用連結（阻擋自動跳轉時可手點） */
     const fallback = document.getElementById('fallback');
     fallback.href = target;
 
-    // 统一跳转：先发事件（FB + X），再延迟跳转，避免丢数
+    /* 統一跳轉：先上報事件（FB + X），再延遲跳轉，避免丟數據 */
     function go() {
       try { fbq('trackCustom','WhatsApp_Click', { destination: target }); } catch(e){}
+      try { fbq('track','Contact', { destination: target }); } catch(e){}   /* 標準事件，便於優化 */
       try { twq('event','tw-q1c3c-qiev1', { value: 1, currency: 'HKD' }); } catch(e){}
-      setTimeout(function(){ window.location.replace(target); }, 300); // 可再加到 400–500ms
+      setTimeout(function(){ window.location.replace(target); }, 400);      /* 更穩：400ms */
     }
+
+    /* 自動跳轉（先上報後跳） */
     go();
-    fallback.addEventListener('click', function(e){ e.preventDefault(); go(); });
+
+    /* 使用者手點備用連結時也走同一流程 */
+    fallback.addEventListener('click', function(e){
+      e.preventDefault();
+      go();
+    });
   </script>
 
   <noscript>
     如未自動跳轉，請點此：
-    <a href="https://wa.me/85268837643?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%BE%88%E9%AB%98%E8%88%88%E8%AA%8D%E8%AD%98%E4%BD%A0" rel="noopener" target="_blank">
+    <a href="https://wa.me/85268837643?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%BE%88%E9%AB%98%E8%88%88%E8%AA%8D%E8%AD%98%E4%BD%A0"
+       rel="noopener noreferrer nofollow" target="_blank">
       https://wa.me/85268837643
     </a>
   </noscript>
