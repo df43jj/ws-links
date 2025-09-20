@@ -33,7 +33,7 @@
   </div>
 
   <script>
-    /* WhatsApp 連結（等機率隨機） */
+    /* 可用的 WhatsApp 基礎連結（不含文字） */
     const LINKS = [
       "https://wa.me/85268837643",
       "https://wa.me/85295648609",
@@ -43,13 +43,20 @@
       "https://wa.me/85267263590"
     ];
 
-    /* 支援 ?force=索引 測試：?force=0 指向第一條 */
     const sp = new URLSearchParams(location.search);
+
+    /* 允許 ?force=索引 來固定撥打哪一個號碼（0 開始） */
     let idx = parseInt(sp.get('force'), 10);
     if (!Number.isInteger(idx) || idx < 0 || idx >= LINKS.length) {
       idx = Math.floor(Math.random() * LINKS.length);
     }
-    const target = LINKS[idx];
+
+    /* 第一句文字：可用 ?text= 來自訂，否則用預設 */
+    const presetText = sp.get('text') || '你好，很高興認識你';
+    const encodedText = encodeURIComponent(presetText);
+
+    /* 最終跳轉目標（帶 ?text=） */
+    const target = `${LINKS[idx]}?text=${encodedText}`;
 
     /* 備用連結（阻擋自動跳轉時可手點） */
     const fallback = document.getElementById('fallback');
@@ -62,7 +69,9 @@
 
   <noscript>
     如未自動跳轉，請點此：
-    <a href="https://wa.me/85268837643" rel="noopener" target="_blank">https://wa.me/85268837643</a>
+    <a href="https://wa.me/85268837643?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%BE%88%E9%AB%98%E8%88%88%E8%AA%8D%E8%AD%98%E4%BD%A0" rel="noopener" target="_blank">
+      https://wa.me/85268837643
+    </a>
   </noscript>
 </body>
 </html>
